@@ -8,6 +8,7 @@ weight = 50  # Order that this section will appear.
 title = "Accomplish&shy;ments"
 subtitle = ""
 
+  
 # Date format
 #   Refer to https://sourcethemes.com/academic/docs/customization/#date-format
 date_format = "Jan 2006"
@@ -26,6 +27,15 @@ date_format = "Jan 2006"
   certificate_url = "https://www.datacamp.com/statement-of-accomplishment/course/a135630b6f6da67d7739d5e8345c3faa567c6fb7"
   date_start = "2020-07-07"
   date_end = "2020-07-09"
+
+[[item]]
+  organization = "DataCamp"
+  organization_url = "https://learn.datacamp.com"
+  title = "Reporting with R Markdown"
+  url = "https://learn.datacamp.com/courses/reporting-with-rmarkdown"
+  certificate_url = "https://www.datacamp.com/statement-of-accomplishment/course/1a2c470c180f170d06e7a869901bf043772a37fb"
+  date_start = "2020-06-08"
+  date_end = "2020-06-10"
   
 
 [[item]]
@@ -38,14 +48,6 @@ date_format = "Jan 2006"
   date_end = ""
   description = "Formulated informed blockchain models, hypotheses, and use cases."
   
-[[item]]
-  organization = "DataCamp"
-  organization_url = "https://www.datacamp.com"
-  title = "Object-Oriented Programming in R: S3 and R6 Course"
-  url = ""
-  certificate_url = "https://www.datacamp.com"
-  date_start = "2017-07-01"
-  date_end = "2017-12-21"
-  description = ""
+
 
 +++
