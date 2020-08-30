@@ -37,7 +37,6 @@ date_format = "Jan 2006"
   date_start = "2020-06-08"
   date_end = "2020-06-10"
   
-
 [[item]]
   organization = "edX"
   organization_url = "https://www.edx.org"
