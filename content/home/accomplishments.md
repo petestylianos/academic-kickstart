@@ -38,15 +38,14 @@ date_format = "Jan 2006"
   date_end = "2020-06-10"
   
 [[item]]
-  organization = "edX"
-  organization_url = "https://www.edx.org"
-  title = "Blockchain Fundamentals"
-  url = "https://www.edx.org/professional-certificate/uc-berkeleyx-blockchain-fundamentals"
-  certificate_url = "https://www.edx.org"
-  date_start = "2018-03-01"
-  date_end = ""
-  description = "Formulated informed blockchain models, hypotheses, and use cases."
-  
+  organization = "DataCamp"
+  organization_url = "https://learn.datacamp.com"
+  title = "Exploratory Data Analysis in R"
+  url = "https://learn.datacamp.com/courses/exploratory-data-analysis-in-r"
+  certificate_url = "https://www.datacamp.com/statement-of-accomplishment/course/ac7f7d931e022555371082c54c159e5699915557"
+  date_start = "2020-07-04"
+  date_end = "2020-07-06"
+
 
 
 +++
