@@ -46,6 +46,41 @@ date_format = "Jan 2006"
   date_start = "2020-07-04"
   date_end = "2020-07-06"
 
+[[item]]
+  organization = "DataCamp"
+  organization_url = "https://learn.datacamp.com"
+  title = "Building Web Applications with Shiny in R"
+  url = "https://learn.datacamp.com/courses/building-web-applications-with-shiny-in-r"
+  certificate_url = "https://www.datacamp.com/statement-of-accomplishment/course/1f1ad86bd523b06d9e7b8b22c339de1b59472e65"
+  date_start = "2020-08-27"
+  date_end = "2020-08-31"
+
+[[item]]
+  organization = "DataCamp"
+  organization_url = "https://learn.datacamp.com"
+  title = "Correlation and Regression in R"
+  url = "https://learn.datacamp.com/courses/correlation-and-regression-in-r"
+   certificate_url = "https://www.datacamp.com/statement-of-accomplishment/course/447acdf7aba670944c9307e0e0f987f2f3e34a5f"
+  date_start = "2020-07-05"
+  date_end = "2020-07-09"
+
+[[item]]
+  organization = "DataCamp"
+  organization_url = "https://learn.datacamp.com"
+  title = "Joining Data with dplyr"
+  url = "https://learn.datacamp.com/courses/joining-data-with-dplyr"
+   certificate_url = "https://www.datacamp.com/statement-of-accomplishment/course/7b9aed7f8a2371fc85484a70493432d230047125"
+  date_start = "2020-06-27"
+  date_end = "2020-06-29"
+
+[[item]]
+  organization = "DataCamp"
+  organization_url = "https://learn.datacamp.com"
+  title =  "Introduction to the Tidyverse"
+  url = "https://learn.datacamp.com/courses/introduction-to-the-tidyverse"
+   certificate_url = "https://www.datacamp.com/statement-of-accomplishment/course/7b9aed7f8a2371fc85484a70493432d230047125"
+  date_start = "2020-06-07"
+  date_end = "2020-06-09"
 
 
 +++
