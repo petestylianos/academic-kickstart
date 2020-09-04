@@ -73,5 +73,5 @@ user_groups:
 - Visitors
 ---
 
-I am currently pursuing a master's degree in Business Analytics from Monash University. I am interested in incorporating Data Science into Finance and Sport's analytics. My bachelors degree is in Finance and Banking Management and I would like to work in Finance upon graduating. At the moment. I am busy getting through the steap learning curve of __R__ and improve my interactive visualizations skills by building __Shiny__ apps.
+I am currently pursuing a master's degree in Business Analytics from Monash University. I am interested in incorporating Data Science into Finance and Sport's analytics. My bachelors degree is in Finance and Banking Management and I would like to work in Finance upon graduating. At the moment I am busy getting through the steap learning curve of __R__ and improving my interactive visualizations skills by building __Shiny__ apps.
 
