@@ -31,6 +31,16 @@ date_format = "Jan 2006"
 [[item]]
   organization = "DataCamp"
   organization_url = "https://learn.datacamp.com"
+  title = "Communicating with Data in the Tidyverse"
+  url = "https://learn.datacamp.com/courses/communicating-with-data-in-the-tidyverse"
+  certificate_url = "https://www.datacamp.com/statement-of-accomplishment/course/19d4be7e5ff0b5f39d99de9ffbcd46584be327b3"
+  date_start = "2020-09-03"
+  date_end = "2020-09-04"
+
+
+[[item]]
+  organization = "DataCamp"
+  organization_url = "https://learn.datacamp.com"
   title = "Reporting with R Markdown"
   url = "https://learn.datacamp.com/courses/reporting-with-rmarkdown"
   certificate_url = "https://www.datacamp.com/statement-of-accomplishment/course/1a2c470c180f170d06e7a869901bf043772a37fb"
