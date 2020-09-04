@@ -1,0 +1,237 @@
+---
+title: "COVID-19 the case of Qatar"
+author: "Panagiotis Stylianos"
+date: "04/09/2020"
+output: 
+  bookdown::html_document2:
+    theme: journal
+      
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+> This is my first blog-post. In this [repository](https://github.com/etc5523-2020/my-blog-petestylianos) you can find the contents of the blog spot, which can also be found at my [website](https://panagiotis-stylianos.netlify.app)
+
+
+<span style="font-size:7mm">Required Libraries</span>
+```{r pkg-load}
+library(coronavirus)
+library(tidyverse)
+library(kableExtra)
+library(gridExtra)
+library(gt)
+library(DT)
+library(captioner)
+library(ggthemes)
+library(widgetframe)
+```
+
+ > In this blog-post I will take a look at the __spread of COVID-19 in Qatar__. This post is part of an assignment for _unit ETC5523 on track for the Master of Business Analytics from Monash University._
+
+<span style="font-size:7mm">Analysis</span>
+
+Let's take a look at our data coming from the [coronavirus package](https://github.com/RamiKrispin/coronavirus). It contains daily data for the number of cases of COVID-19 for a plethora of countries.
+
+First we obtain the relevant data for Qatar.
+```{r qatar}
+qatar <- coronavirus %>% 
+  filter(country == "Qatar") %>% 
+  select(c(date, type, cases)) %>% 
+  as_tibble()
+```
+
+Our dataset contains data for `r nrow(qatar)` days. Starting from _`r qatar$date[1]`_ up to 
+_`r qatar$date[nrow(qatar)]`_. The type column contains the following categories: _`r unique(qatar$type)`_.
+
+These are the most recent observations.
+
+```{r tbl- captions, echo = FALSE}
+table_nums <- captioner::captioner(prefix = "Tab.")
+tab.1_cap <- table_nums(name = "tab_1", 
+                        caption = "Daily Cases of COVID-19 in Qatar")
+tab.2_cap <- table_nums(name = "tab_2", 
+                        caption = "Aggregated Info")
+tab.3_cap <- table_nums(name = "tab_3", 
+                        caption = "Monthly Data")
+
+```
+
+```{r data-table, fig.cap = tab.1_cap}
+tbl1 <- tail(qatar) %>% 
+   kable(col.names = c("Date", "Type of Case", "Number of Cases"),label = knitr::opts_chunk$get("label")) %>% 
+   kable_styling(font_size = 14, bootstrap_options = "hover", 
+                 fixed_thead = list(enabled = T, background = "plum"), position = "center",
+                 row_label_position = "c", full_width = T) %>% 
+  column_spec(1, width = "10em", italic  = T, border_right = T, monospace = T ) %>% 
+  column_spec(2, width = "10em", border_right = T, monospace = T) %>%
+  column_spec(3, width = "10em", background = "lightgrey", bold = T, color = "black") %>% 
+  footnote(general = "Data from the coronavirus package") 
+```
+
+`r table_nums("tab_1")`
+
+```{r table-output, echo = FALSE}
+tbl1
+```
+
+<span style="font-size:7mm">Let's perform some Exploratory Analysis</span>
+
+```{r figures, fig.cap= 'Cases over time', fig.width= 15, fig.height=8}
+p1 <- qatar %>% 
+  filter(type %in% c("confirmed", "recovered")) %>% 
+  ggplot(aes(date, cases, fill = type)) +
+  geom_col() +
+  theme_economist(horizontal = TRUE, base_family = "Verdana") +
+  scale_fill_economist() +
+  scale_color_economist() +
+  ggtitle("Cases over time") +
+  xlab("Date") +
+  ylab("Cases") +
+  theme(legend.position = "right", title = element_text(size=12), 
+        axis.title.x = element_text(size = 16, angle = 0, face = "bold"),
+        axis.title.y = element_text(size = 16, angle = 90, face = "bold"))
+
+
+p2 <- qatar %>% 
+  filter(type %in% c("confirmed", "recovered")) %>% 
+  ggplot(aes(date, log(cases), color = type)) +
+  geom_line() +theme_economist(horizontal = TRUE, base_family = "Verdana") +
+  scale_fill_economist() +
+  scale_color_economist() +
+  ggtitle("Cases over time in logarithmic scale") +
+  xlab("Date") +
+  ylab("Cases") +
+  theme(legend.position = "right", title = element_text(size=12), 
+        axis.title.x = element_text(size = 16, angle = 0, face = "bold"),
+        axis.title.y = element_text(size = 16, angle = 90, face = "bold"))
+
+grid.arrange(p1, p2)
+```
+
+Let's manipulate our data to get the total cases for each sub-type of case.
+
+```{r stats}
+qatar_wide <- qatar %>% 
+  pivot_wider(names_from = type, values_from = cases)
+
+stats <- qatar_wide %>% 
+  summarise(Total_confirmed = sum(confirmed),
+            Total_deaths = sum(death),
+            Total_recovered = sum(recovered),
+            Max_dead = max(death),
+            Max_confirmed = max(confirmed))
+
+```
+
+```{r stats-tbl, fig.cap = tab.2_cap}
+st_tbl <- stats %>% 
+  kable(col.names = c("Total-Confirmed", "Total-Deaths", "Total-Recovered", "Max-Daily-Deaths", "Max-Daily-Confirmed"), label = knitr::opts_chunk$get("label")) %>% 
+   kable_styling(font_size = 14, bootstrap_options = "hover", 
+                 fixed_thead = list(enabled = T, background = "plum"), position = "center",
+                 row_label_position = "c", full_width = T) %>% 
+  # column_spec(1, width = "10em", italic  = T, border_right = T, monospace = T ) %>% 
+  # column_spec(2, width = "10em", border_right = T, monospace = T) %>%
+  # column_spec(3, width = "10em", background = "lightgrey", bold = T, color = "black") %>% 
+  footnote(general = "Aggregated Information") 
+
+```
+
+
+`r table_nums("tab_2")`
+
+```{r st_tbl, echo=FALSE}
+st_tbl
+```
+
+Now lets look at the cumulative data.
+
+```{r cumulative-data}
+cumul_qatar <- qatar_wide %>% 
+  mutate(cuml_confirmed = cumsum(confirmed),
+         cuml_death = cumsum(death),
+         cuml_recoverd = cumsum(recovered))
+```
+
+Using longer format to visualize them.
+```{r cumul-vis, fig.cap= 'Cumulative Cases', fig.width= 15, fig.height=8}
+cumul_qatar_long <- cumul_qatar %>% 
+  pivot_longer(cols = contains("cum"),
+               names_to = "type",
+               values_to = "cumulative")
+
+
+cumul_qatar_long %>% 
+  ggplot(aes(date, log10(cumulative), color = type)) +
+  geom_line() +
+  theme_economist(horizontal = TRUE, base_family = "Verdana") +
+  scale_fill_economist() +
+  scale_color_economist() +
+  ggtitle("Cumulative Cases over time") +
+  xlab("Date") +
+  ylab("Cases") +
+  theme(legend.position = "right", title = element_text(size=12), 
+        axis.title.x = element_text(size = 16, angle = 0, face = "bold"),
+        axis.title.y = element_text(size = 16, angle = 90, face = "bold"))
+```
+
+Now, lets explore the disribution of the confirmed cases for each month.
+
+```{r monthly-data}
+qatar_monthly <- qatar %>% 
+  mutate(month = str_sub(date, 6, 7))
+
+
+qatar_monthly <-  qatar_monthly %>% 
+  mutate(month = recode(month, "01" = "January",
+                        "02" = "February",
+                        "03" = "March",
+                        "04" = "April",
+                        "05" = "May",
+                        "06" = "June",
+                        "07" = "July"))
+
+qatar_monthly$month <- factor(qatar_monthly$month, levels = c("January",
+                       "February","March", "April", "May","June","July")) 
+
+```
+
+
+
+```{r box-plot, fig.cap= 'Monthly Box-plots', fig.width= 15, fig.height=8}
+
+qatar_monthly %>% 
+  filter(type == "confirmed",
+         month %in% c("April","May","June","July")) %>% 
+  ggplot(aes(month, cases)) +
+  geom_boxplot(aes(fill = month)) +
+  theme_economist(horizontal = TRUE, base_family = "Verdana") +
+  scale_fill_economist() +
+  scale_color_economist() +
+  ggtitle("Monthly Box-plots") +
+  xlab("Month") +
+  ylab("Cases") +
+  theme(legend.position = "right", title = element_text(size=12), 
+        axis.title.x = element_text(size = 16, angle = 0, face = "bold"),
+        axis.title.y = element_text(size = 16, angle = 90, face = "bold"))
+```
+
+
+Finally, let's produce an interactive table for users to explore the number of cases based on month and category of case.
+
+```{r interactive-tbl, fig.cap = tab.3_cap}
+interactive_tbl <- DT::datatable(
+qatar_monthly %>% 
+  group_by(month, type) %>% 
+  summarise(Total = sum(cases))) 
+
+```
+
+`r table_nums("tab_3")`
+
+```{r show-inter-tbl, echo=FALSE}
+widgetframe::frameWidget(interactive_tbl)
+```
+
+

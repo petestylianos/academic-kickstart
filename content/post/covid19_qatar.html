@@ -1,0 +1,329 @@
+---
+title: "COVID-19 the case of Qatar"
+author: "Panagiotis Stylianos"
+date: "04/09/2020"
+output: 
+  bookdown::html_document2:
+    theme: journal
+      
+---
+
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/pymjs/pym.v1.js"></script>
+<script src="/rmarkdown-libs/widgetframe-binding/widgetframe.js"></script>
+
+
+<blockquote>
+<p>This is my first blog-post. In this <a href="https://github.com/etc5523-2020/my-blog-petestylianos">repository</a> you can find the contents of the blog spot, which can also be found at my <a href="https://panagiotis-stylianos.netlify.app">website</a></p>
+</blockquote>
+<p><span style="font-size:7mm">Required Libraries</span></p>
+<pre class="r"><code>library(coronavirus)
+library(tidyverse)
+library(kableExtra)
+library(gridExtra)
+library(gt)
+library(DT)
+library(captioner)
+library(ggthemes)
+library(widgetframe)</code></pre>
+<blockquote>
+<p>In this blog-post I will take a look at the <strong>spread of COVID-19 in Qatar</strong>. This post is part of an assignment for <em>unit ETC5523 on track for the Master of Business Analytics from Monash University.</em></p>
+</blockquote>
+<p><span style="font-size:7mm">Analysis</span></p>
+<p>Let’s take a look at our data coming from the <a href="https://github.com/RamiKrispin/coronavirus">coronavirus package</a>. It contains daily data for the number of cases of COVID-19 for a plethora of countries.</p>
+<p>First we obtain the relevant data for Qatar.</p>
+<pre class="r"><code>qatar &lt;- coronavirus %&gt;% 
+  filter(country == &quot;Qatar&quot;) %&gt;% 
+  select(c(date, type, cases)) %&gt;% 
+  as_tibble()</code></pre>
+<p>Our dataset contains data for 576 days. Starting from <em>2020-01-22</em> up to
+<em>2020-07-31</em>. The type column contains the following categories: <em>confirmed, death, recovered</em>.</p>
+<p>These are the most recent observations.</p>
+<pre class="r"><code>tbl1 &lt;- tail(qatar) %&gt;% 
+   kable(col.names = c(&quot;Date&quot;, &quot;Type of Case&quot;, &quot;Number of Cases&quot;),label = knitr::opts_chunk$get(&quot;label&quot;)) %&gt;% 
+   kable_styling(font_size = 14, bootstrap_options = &quot;hover&quot;, 
+                 fixed_thead = list(enabled = T, background = &quot;plum&quot;), position = &quot;center&quot;,
+                 row_label_position = &quot;c&quot;, full_width = T) %&gt;% 
+  column_spec(1, width = &quot;10em&quot;, italic  = T, border_right = T, monospace = T ) %&gt;% 
+  column_spec(2, width = &quot;10em&quot;, border_right = T, monospace = T) %&gt;%
+  column_spec(3, width = &quot;10em&quot;, background = &quot;lightgrey&quot;, bold = T, color = &quot;black&quot;) %&gt;% 
+  footnote(general = &quot;Data from the coronavirus package&quot;) </code></pre>
+<p>Tab. 1: Daily Cases of COVID-19 in Qatar</p>
+<table class="table table-hover" style="font-size: 14px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: plum;">
+Date
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: plum;">
+Type of Case
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: plum;">
+Number of Cases
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 10em; font-style: italic;font-family: monospace;border-right:1px solid;">
+2020-07-26
+</td>
+<td style="text-align:left;width: 10em; font-family: monospace;border-right:1px solid;">
+recovered
+</td>
+<td style="text-align:right;width: 10em; font-weight: bold;color: black !important;background-color: lightgrey !important;">
+274
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 10em; font-style: italic;font-family: monospace;border-right:1px solid;">
+2020-07-27
+</td>
+<td style="text-align:left;width: 10em; font-family: monospace;border-right:1px solid;">
+recovered
+</td>
+<td style="text-align:right;width: 10em; font-weight: bold;color: black !important;background-color: lightgrey !important;">
+304
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 10em; font-style: italic;font-family: monospace;border-right:1px solid;">
+2020-07-28
+</td>
+<td style="text-align:left;width: 10em; font-family: monospace;border-right:1px solid;">
+recovered
+</td>
+<td style="text-align:right;width: 10em; font-weight: bold;color: black !important;background-color: lightgrey !important;">
+275
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 10em; font-style: italic;font-family: monospace;border-right:1px solid;">
+2020-07-29
+</td>
+<td style="text-align:left;width: 10em; font-family: monospace;border-right:1px solid;">
+recovered
+</td>
+<td style="text-align:right;width: 10em; font-weight: bold;color: black !important;background-color: lightgrey !important;">
+246
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 10em; font-style: italic;font-family: monospace;border-right:1px solid;">
+2020-07-30
+</td>
+<td style="text-align:left;width: 10em; font-family: monospace;border-right:1px solid;">
+recovered
+</td>
+<td style="text-align:right;width: 10em; font-weight: bold;color: black !important;background-color: lightgrey !important;">
+286
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 10em; font-style: italic;font-family: monospace;border-right:1px solid;">
+2020-07-31
+</td>
+<td style="text-align:left;width: 10em; font-family: monospace;border-right:1px solid;">
+recovered
+</td>
+<td style="text-align:right;width: 10em; font-weight: bold;color: black !important;background-color: lightgrey !important;">
+242
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<sup></sup> Data from the coronavirus package
+</td>
+</tr>
+</tfoot>
+</table>
+<p><span style="font-size:7mm">Let’s perform some Exploratory Analysis</span></p>
+<pre class="r"><code>p1 &lt;- qatar %&gt;% 
+  filter(type %in% c(&quot;confirmed&quot;, &quot;recovered&quot;)) %&gt;% 
+  ggplot(aes(date, cases, fill = type)) +
+  geom_col() +
+  theme_economist(horizontal = TRUE, base_family = &quot;Verdana&quot;) +
+  scale_fill_economist() +
+  scale_color_economist() +
+  ggtitle(&quot;Cases over time&quot;) +
+  xlab(&quot;Date&quot;) +
+  ylab(&quot;Cases&quot;) +
+  theme(legend.position = &quot;right&quot;, title = element_text(size=12), 
+        axis.title.x = element_text(size = 16, angle = 0, face = &quot;bold&quot;),
+        axis.title.y = element_text(size = 16, angle = 90, face = &quot;bold&quot;))
+
+
+p2 &lt;- qatar %&gt;% 
+  filter(type %in% c(&quot;confirmed&quot;, &quot;recovered&quot;)) %&gt;% 
+  ggplot(aes(date, log(cases), color = type)) +
+  geom_line() +theme_economist(horizontal = TRUE, base_family = &quot;Verdana&quot;) +
+  scale_fill_economist() +
+  scale_color_economist() +
+  ggtitle(&quot;Cases over time in logarithmic scale&quot;) +
+  xlab(&quot;Date&quot;) +
+  ylab(&quot;Cases&quot;) +
+  theme(legend.position = &quot;right&quot;, title = element_text(size=12), 
+        axis.title.x = element_text(size = 16, angle = 0, face = &quot;bold&quot;),
+        axis.title.y = element_text(size = 16, angle = 90, face = &quot;bold&quot;))
+
+grid.arrange(p1, p2)</code></pre>
+<div class="figure"><span id="fig:figures"></span>
+<img src="/post/covid19_qatar_files/figure-html/figures-1.png" alt="Cases over time" width="1440" />
+<p class="caption">
+Figure 1: Cases over time
+</p>
+</div>
+<p>Let’s manipulate our data to get the total cases for each sub-type of case.</p>
+<pre class="r"><code>qatar_wide &lt;- qatar %&gt;% 
+  pivot_wider(names_from = type, values_from = cases)
+
+stats &lt;- qatar_wide %&gt;% 
+  summarise(Total_confirmed = sum(confirmed),
+            Total_deaths = sum(death),
+            Total_recovered = sum(recovered),
+            Max_dead = max(death),
+            Max_confirmed = max(confirmed))</code></pre>
+<pre class="r"><code>st_tbl &lt;- stats %&gt;% 
+  kable(col.names = c(&quot;Total-Confirmed&quot;, &quot;Total-Deaths&quot;, &quot;Total-Recovered&quot;, &quot;Max-Daily-Deaths&quot;, &quot;Max-Daily-Confirmed&quot;), label = knitr::opts_chunk$get(&quot;label&quot;)) %&gt;% 
+   kable_styling(font_size = 14, bootstrap_options = &quot;hover&quot;, 
+                 fixed_thead = list(enabled = T, background = &quot;plum&quot;), position = &quot;center&quot;,
+                 row_label_position = &quot;c&quot;, full_width = T) %&gt;% 
+  # column_spec(1, width = &quot;10em&quot;, italic  = T, border_right = T, monospace = T ) %&gt;% 
+  # column_spec(2, width = &quot;10em&quot;, border_right = T, monospace = T) %&gt;%
+  # column_spec(3, width = &quot;10em&quot;, background = &quot;lightgrey&quot;, bold = T, color = &quot;black&quot;) %&gt;% 
+  footnote(general = &quot;Aggregated Information&quot;) </code></pre>
+<p>Tab. 2: Aggregated Info</p>
+<table class="table table-hover" style="font-size: 14px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: plum;">
+Total-Confirmed
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: plum;">
+Total-Deaths
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: plum;">
+Total-Recovered
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: plum;">
+Max-Daily-Deaths
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: plum;">
+Max-Daily-Confirmed
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+110695
+</td>
+<td style="text-align:right;">
+174
+</td>
+<td style="text-align:right;">
+107377
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+2355
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<sup></sup> Aggregated Information
+</td>
+</tr>
+</tfoot>
+</table>
+<p>Now lets look at the cumulative data.</p>
+<pre class="r"><code>cumul_qatar &lt;- qatar_wide %&gt;% 
+  mutate(cuml_confirmed = cumsum(confirmed),
+         cuml_death = cumsum(death),
+         cuml_recoverd = cumsum(recovered))</code></pre>
+<p>Using longer format to visualize them.</p>
+<pre class="r"><code>cumul_qatar_long &lt;- cumul_qatar %&gt;% 
+  pivot_longer(cols = contains(&quot;cum&quot;),
+               names_to = &quot;type&quot;,
+               values_to = &quot;cumulative&quot;)
+
+
+cumul_qatar_long %&gt;% 
+  ggplot(aes(date, log10(cumulative), color = type)) +
+  geom_line() +
+  theme_economist(horizontal = TRUE, base_family = &quot;Verdana&quot;) +
+  scale_fill_economist() +
+  scale_color_economist() +
+  ggtitle(&quot;Cumulative Cases over time&quot;) +
+  xlab(&quot;Date&quot;) +
+  ylab(&quot;Cases&quot;) +
+  theme(legend.position = &quot;right&quot;, title = element_text(size=12), 
+        axis.title.x = element_text(size = 16, angle = 0, face = &quot;bold&quot;),
+        axis.title.y = element_text(size = 16, angle = 90, face = &quot;bold&quot;))</code></pre>
+<div class="figure"><span id="fig:cumul-vis"></span>
+<img src="/post/covid19_qatar_files/figure-html/cumul-vis-1.png" alt="Cumulative Cases" width="1440" />
+<p class="caption">
+Figure 2: Cumulative Cases
+</p>
+</div>
+<p>Now, lets explore the disribution of the confirmed cases for each month.</p>
+<pre class="r"><code>qatar_monthly &lt;- qatar %&gt;% 
+  mutate(month = str_sub(date, 6, 7))
+
+
+qatar_monthly &lt;-  qatar_monthly %&gt;% 
+  mutate(month = recode(month, &quot;01&quot; = &quot;January&quot;,
+                        &quot;02&quot; = &quot;February&quot;,
+                        &quot;03&quot; = &quot;March&quot;,
+                        &quot;04&quot; = &quot;April&quot;,
+                        &quot;05&quot; = &quot;May&quot;,
+                        &quot;06&quot; = &quot;June&quot;,
+                        &quot;07&quot; = &quot;July&quot;))
+
+qatar_monthly$month &lt;- factor(qatar_monthly$month, levels = c(&quot;January&quot;,
+                       &quot;February&quot;,&quot;March&quot;, &quot;April&quot;, &quot;May&quot;,&quot;June&quot;,&quot;July&quot;)) </code></pre>
+<pre class="r"><code>qatar_monthly %&gt;% 
+  filter(type == &quot;confirmed&quot;,
+         month %in% c(&quot;April&quot;,&quot;May&quot;,&quot;June&quot;,&quot;July&quot;)) %&gt;% 
+  ggplot(aes(month, cases)) +
+  geom_boxplot(aes(fill = month)) +
+  theme_economist(horizontal = TRUE, base_family = &quot;Verdana&quot;) +
+  scale_fill_economist() +
+  scale_color_economist() +
+  ggtitle(&quot;Monthly Box-plots&quot;) +
+  xlab(&quot;Month&quot;) +
+  ylab(&quot;Cases&quot;) +
+  theme(legend.position = &quot;right&quot;, title = element_text(size=12), 
+        axis.title.x = element_text(size = 16, angle = 0, face = &quot;bold&quot;),
+        axis.title.y = element_text(size = 16, angle = 90, face = &quot;bold&quot;))</code></pre>
+<div class="figure"><span id="fig:box-plot"></span>
+<img src="/post/covid19_qatar_files/figure-html/box-plot-1.png" alt="Monthly Box-plots" width="1440" />
+<p class="caption">
+Figure 3: Monthly Box-plots
+</p>
+</div>
+<p>Finally, let’s produce an interactive table for users to explore the number of cases based on month and category of case.</p>
+<pre class="r"><code>interactive_tbl &lt;- DT::datatable(
+qatar_monthly %&gt;% 
+  group_by(month, type) %&gt;% 
+  summarise(Total = sum(cases))) </code></pre>
+<p>Tab. 3: Monthly Data</p>
+<div id="htmlwidget-1" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"/post/covid19_qatar_files/figure-html//widgets/widget_show-inter-tbl.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
