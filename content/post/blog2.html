@@ -1,0 +1,289 @@
+---
+title: "COVID-19 the case of Qatar Blog-2"
+subtitle: "Focus on presenting graphs"
+author: "Panagiotis Stylianos"
+date: "04/09/2020"
+output: 
+  bookdown::html_document2:
+    theme: journal
+---
+
+
+
+<blockquote>
+<p>This is my second blog-post. In this <a href="https://github.com/etc5523-2020/my-blog-petestylianos">repository</a> you can find the contents of the blog-post, which can also be found at my <a href="https://panagiotis-stylianos.netlify.app">website</a></p>
+</blockquote>
+<p><span style="font-size:7mm">Required Libraries</span></p>
+<pre class="r"><code>library(coronavirus)
+library(tidyverse)
+library(kableExtra)
+library(gridExtra)
+library(gt)
+library(DT)
+library(captioner)
+library(ggthemes)
+library(widgetframe)
+library(patchwork)
+library(viridis)
+library(scales)</code></pre>
+<p>In this blog-post I will take a look at the <strong>spread of COVID-19 in Qatar</strong>. This post is part of an assignment for <em>unit ETC5523 on track for the Master of Business Analytics from Monash University.</em> The focus however this time is on creating informative visualizations. As I am writing this blog-post, I am on a flight from Greece to the Netherlands as I was one of the lucky few that managed to “escape” Melbourne before the lockdown.
+However, although I am able to fly again since at the time the outbreak of COVID-19 in Europe doesn’t raise concerns for a second lockdown, this comes with a disadvantage for my blog-post. The reason, is that while on the flight I am not able to download any new packages from CRAN or extend my datasets with new ones. As so, and in combination with the deadline for the assignment approaching soon, limited to my pre-existing downloaded libraries and datasets. Consequently, will keep the data and manipulations from the previous blog-post, but this time twick my figures from blog-post 1, to see how I can improve them based on the material of the weekly lecture. Specifically, I will keep the figures from the previous blog-post, but this time also display their upgraded version.</p>
+<p>The data story and manipulation remains the same, so I will hide all code regarding data wrangling and keep only the code that produces the relative figures.</p>
+<p>Although, this blog-post might not provide any additional insight on the spread of COVID-19 in Qatar, it will serve as a reminder for those that plan to catch a flight after the end of the lockdown, that in most planes there is not Wi-Fi on board, don’t let the absence of travelling by plane this year influence with your work/assignments.</p>
+<p><em>Jokes aside, let’s start plotting.</em></p>
+<p><span style="font-size:7mm">Custom Theme</span></p>
+<p>Toward upgrading my visualization skills, I will create my personal theme to style my figures.</p>
+<pre class="r"><code>my_theme &lt;- function() {
+  theme_minimal() +     
+    theme(
+      plot.subtitle = element_text(size = 11),
+      plot.title.position = &quot;plot&quot;,       # aligns the figure title, at the beginning of the figure
+      plot.title = element_text(colour = &quot;black&quot;, face = &quot;bold&quot;, size = 13),
+      plot.caption = element_text(colour = &quot;honeydew4&quot;, face = &quot;italic&quot;, size = 12),
+      plot.background = element_rect(fill = &quot;bisque&quot;),    
+      legend.background = element_rect(fill = &quot;honeydew&quot;), 
+      panel.background = element_rect(fill = &quot;azure1&quot;),
+      axis.text.y = element_text(size = 10, colour = &quot;black&quot;),
+      panel.grid = element_blank(),
+      axis.ticks.length.y = unit(0.5, &quot;lines&quot;),
+      legend.key.size = unit(0.7, &quot;cm&quot;),
+      legend.margin = margin(20, 2, 20, 2, &quot;pt&quot;),
+      title = element_text(size=12), 
+      text = element_text(family = &quot;Times&quot;, size = 12),
+      axis.title.x = element_text(size = 15,  face = &quot;bold&quot;, colour = &quot;mediumpurple2&quot;),
+      axis.title.y = element_text(size = 14, face = &quot;bold&quot;,  colour = &quot;mediumpurple2&quot;),
+      axis.text.x = element_text(size = 12),
+      axis.line.x = element_line(color = &quot;black&quot;,
+                                  size = 1.3,
+                                  arrow = grid::arrow(type = &quot;closed&quot;, 
+                                                      length = unit(x = c(4, 30), units = &quot;mm&quot;))),
+     axis.ticks = element_line(color = &quot;black&quot;, size = 1.1),
+     axis.ticks.length = unit(2, &quot;mm&quot;),
+     legend.title = element_text(size = 12,
+                                   color = &quot;black&quot;)
+    )
+}</code></pre>
+<p><span style="font-size:7mm">Visualizations</span></p>
+<p>These were the original figure from blog-post1</p>
+<pre class="r"><code>p1 &lt;- qatar %&gt;% 
+  filter(type %in% c(&quot;confirmed&quot;, &quot;recovered&quot;)) %&gt;% 
+  ggplot(aes(date, cases, fill = type)) +
+  geom_col() + 
+  scale_fill_economist() +
+  scale_color_economist() +
+  theme_economist(horizontal = TRUE, base_family = &quot;Verdana&quot;) +
+   xlab(&quot;Date&quot;) +
+   ylab(&quot;Cases&quot;) +
+   labs(
+     title = &quot;Cases over time by category&quot;,
+     caption = &quot;Data from coronavirus package&quot;
+     )  
+
+p2 &lt;- qatar %&gt;% 
+  filter(type %in% c(&quot;confirmed&quot;, &quot;recovered&quot;)) %&gt;% 
+  ggplot(aes(date, log(cases), color = type)) +
+  geom_line() +
+  theme_economist(horizontal = TRUE, base_family = &quot;Verdana&quot;) +
+  scale_fill_economist() +
+  scale_color_economist() +
+  ggtitle(&quot;Cases over time in logarithmic scale&quot;) +
+  xlab(&quot;Date&quot;) +
+  ylab(&quot;Cases&quot;) +
+  theme(legend.position = &quot;right&quot;, title = element_text(size=12),
+        axis.title.x = element_text(size = 16, angle = 0, face = &quot;bold&quot;),
+        axis.title.y = element_text(size = 16, angle = 90, face = &quot;bold&quot;))
+
+grid.arrange(p1, p2)   </code></pre>
+<div class="figure"><span id="fig:figures"></span>
+<img src="/post/blog2_files/figure-html/figures-1.png" alt="Cases over time" width="672" />
+<p class="caption">
+Figure 1: Cases over time
+</p>
+</div>
+<p>I mainly used the economist theme, but there are a lot of things that require improvement.</p>
+<ul>
+<li>First of all the text elements in the two plots are of different size, drawing more emphasis to the second plot.</li>
+<li>The size of figure 1 in contrast to the legend is very small making hard to interpret.</li>
+<li>Displaying the same legend two times is unnecessary.</li>
+</ul>
+<p>Let’s upgrade them.</p>
+<pre class="r"><code>p1_new &lt;- qatar %&gt;% 
+  filter(type %in% c(&quot;confirmed&quot;, &quot;recovered&quot;)) %&gt;% 
+  ggplot(aes(date, cases, fill = type)) +
+  geom_col(width = 1) +
+  my_theme() +
+  theme(
+    legend.position = c(0.105, 0.21)) +
+  scale_fill_viridis(&quot;Type&quot;, discrete = TRUE, 
+                      labels = c(&quot;Confirmed Cases&quot;,
+                                 &quot;Recovered Cases&quot;), alpha = 0.8, 
+                    begin = c(0.3)
+                      ) + 
+  scale_x_date(labels = date_format(&quot;%B&quot;), breaks=&#39;1 month&#39;, position = &quot;top&quot;) +
+  labs(
+    title = &quot;The peak is over&quot;,
+    subtitle = &quot;Total cases per day in Qatar&quot;,
+    caption = &quot;Data from the coronavirus package&quot;
+  ) +
+  xlab(&quot;Month&quot;) +
+  ylab(&quot;Number of Cases&quot;) 
+  
+
+p1_new</code></pre>
+<div class="figure"><span id="fig:original-figures-upgrade"></span>
+<img src="/post/blog2_files/figure-html/original-figures-upgrade-1.png" alt="Cases over time(upgrade)" width="672" />
+<p class="caption">
+Figure 2: Cases over time(upgrade)
+</p>
+</div>
+<p>Much better!!</p>
+<p>Let’s improve the second plot.</p>
+<pre class="r"><code>p2_new &lt;- qatar %&gt;% 
+  filter(type %in% c(&quot;confirmed&quot;, &quot;recovered&quot;)) %&gt;% 
+  ggplot(aes(date, log(cases), color = type, linetype = type)) +
+  geom_line(size = 1.5) +
+  my_theme() + 
+  scale_color_viridis(&quot;Type&quot;, discrete = TRUE, 
+                      labels = c(&quot;Confirmed Cases&quot;,
+                                 &quot;Recovered Cases&quot;), 
+                     begin = c(0.3)
+                      ) + 
+  scale_x_date(labels = date_format(&quot;%B&quot;), breaks=&#39;1 month&#39;, position = &quot;top&quot;) +
+  scale_linetype_manual(values=c(&quot;twodash&quot;, &quot;solid&quot;)) +
+  labs(
+    title = &quot;Flattening the curve&quot;,
+    subtitle = &quot;Growth of cases per day in Qatar in logarithmic scale&quot;,
+    caption = &quot;Data from the coronavirus package&quot;
+  ) +
+  xlab(&quot;Month&quot;) +
+  ylab(&quot;Growth oh cases&quot;) +
+  guides(linetype = FALSE) +
+  theme(
+    legend.position = c(0.897, 0.21),
+  )
+  
+p2_new</code></pre>
+<div class="figure"><span id="fig:original-figures-upgrade2"></span>
+<img src="/post/blog2_files/figure-html/original-figures-upgrade2-1.png" alt="Cases over time in logarithmic scale" width="672" />
+<p class="caption">
+Figure 3: Cases over time in logarithmic scale
+</p>
+</div>
+<p>This is the original plot visualizing the cumulative case. Let’s enhance it.</p>
+<pre class="r"><code>cumul_qatar_long &lt;- cumul_qatar %&gt;% 
+  pivot_longer(cols = contains(&quot;cum&quot;),
+               names_to = &quot;type&quot;,
+               values_to = &quot;cumulative&quot;)
+
+
+cumul_qatar_long %&gt;% 
+  ggplot(aes(date, log10(cumulative), color = type)) +
+  geom_line() +
+  theme_economist(horizontal = TRUE, base_family = &quot;Verdana&quot;) +
+  scale_fill_economist() +
+  scale_color_economist() +
+  ggtitle(&quot;Cumulative Cases over time&quot;) +
+  xlab(&quot;Date&quot;) +
+  ylab(&quot;Cases&quot;) +
+  theme(legend.position = &quot;right&quot;, title = element_text(size=12), 
+        axis.title.x = element_text(size = 16, angle = 0, face = &quot;bold&quot;),
+        axis.title.y = element_text(size = 16, angle = 90, face = &quot;bold&quot;))</code></pre>
+<div class="figure"><span id="fig:cumul-vis"></span>
+<img src="/post/blog2_files/figure-html/cumul-vis-1.png" alt="Cumulative Cases" width="672" />
+<p class="caption">
+Figure 4: Cumulative Cases
+</p>
+</div>
+<ul>
+<li>Hard to distinguish between line’s color.</li>
+<li>The legend includes the values of the variable as coded in our dataset.</li>
+<li>Not enough info on when is the beginning and end of the months.</li>
+<li>Nowhere in the plot it is mentioned that the data are in a logarithmic scale.</li>
+</ul>
+<pre class="r"><code>cumul_qatar_long %&gt;% 
+  ggplot(aes(date, log10(cumulative), color = type, linetype = type)) +
+  geom_line(size = 1.5) + 
+  my_theme() + 
+  theme(legend.position = c(0.101, 0.25)) +
+  scale_color_viridis(&quot;Type&quot;, discrete = TRUE, 
+                      labels = c(&quot;Confirmed Cases&quot;,
+                                 &quot;Total Deaths&quot;,
+                                 &quot;Recovered Cases&quot;
+                                 ), 
+                     begin = c(0.3)
+                      ) + 
+  scale_x_date(labels = date_format(&quot;%B&quot;), breaks=&#39;1 month&#39;, position = &quot;top&quot;) +
+  scale_linetype_manual(values=c(&quot;twodash&quot;, &quot;solid&quot;, &quot;dotted&quot;)) +
+  labs(
+    title = &quot;Signs of decrease in new cases&quot;,
+    subtitle = &quot;Cumulative Cases over time&quot;,
+    caption = &quot;Data from the coronavirus package&quot;
+  ) +
+  xlab(&quot;Month&quot;) +
+  ylab(&quot;Cummulative growth of cases(log10)&quot;) +
+  guides(linetype = FALSE) </code></pre>
+<div class="figure"><span id="fig:cumul-case"></span>
+<img src="/post/blog2_files/figure-html/cumul-case-1.png" alt="Cumulative Cases(upgrade)" width="672" />
+<p class="caption">
+Figure 5: Cumulative Cases(upgrade)
+</p>
+</div>
+<p>This figure was used to explore the distribution of the confirmed cases for each month.</p>
+<pre class="r"><code>box &lt;- qatar_monthly %&gt;% 
+  filter(type == &quot;confirmed&quot;,
+         month %in% c(&quot;April&quot;,&quot;May&quot;,&quot;June&quot;,&quot;July&quot;)) %&gt;% 
+  ggplot(aes(month, cases)) +
+  geom_boxplot(aes(fill = month)) +
+  theme_economist(horizontal = TRUE, base_family = &quot;Verdana&quot;) +
+  scale_fill_economist() +
+  scale_color_economist() +
+  ggtitle(&quot;Monthly Box-plots&quot;) +
+  xlab(&quot;Month&quot;) +
+  ylab(&quot;Cases&quot;) +
+  theme(legend.position = &quot;right&quot;, title = element_text(size=12), 
+        axis.title.x = element_text(size = 16, angle = 0, face = &quot;bold&quot;),
+        axis.title.y = element_text(size = 16, angle = 90, face = &quot;bold&quot;))
+
+box</code></pre>
+<div class="figure"><span id="fig:box-plot"></span>
+<img src="/post/blog2_files/figure-html/box-plot-1.png" alt="Monthly Box-plots" width="672" />
+<p class="caption">
+Figure 6: Monthly Box-plots
+</p>
+</div>
+<ul>
+<li>Although the monthly distribution can be understood from the box-plots, we can make this figure more aesthetically pleasing. Also, the use of violin-plots might prove to also provide better information about the distribution.</li>
+</ul>
+<pre class="r"><code>new_box &lt;- qatar_monthly %&gt;% 
+  filter(type == &quot;confirmed&quot;,
+         month %in% c(&quot;April&quot;,&quot;May&quot;,&quot;June&quot;,&quot;July&quot;)) %&gt;% 
+  ggplot(aes(month, cases)) +
+  geom_violin(aes(fill = month)) +
+  geom_jitter(aes(color = month), alpha = 0.4) +
+  my_theme() + 
+ scale_fill_viridis(discrete = TRUE, begin = c(0.3)) + 
+ scale_color_viridis(discrete = TRUE, begin = c(0.3)) + 
+  labs(
+    title = &quot;Monthly Distribution of new cases&quot;,
+    subtitle = &quot;Violin plots show the probability density of the data&quot;,
+    caption = &quot;Data from the coronavirus package&quot;
+  ) +
+  xlab(&quot;Month&quot;) +
+  ylab(&quot;Number of new cases&quot;) +
+  guides(linetype = FALSE) 
+  
+new_box</code></pre>
+<div class="figure"><span id="fig:boxplot-new"></span>
+<img src="/post/blog2_files/figure-html/boxplot-new-1.png" alt="Monthly Distribution(upgrade)" width="672" />
+<p class="caption">
+Figure 7: Monthly Distribution(upgrade)
+</p>
+</div>
+<p>Let’s put the last two plots side-by-side to see the difference between the grid.arrange() function from the <strong>gridExtra</strong> package and the <strong>patchwork</strong> package.</p>
+<pre class="r"><code>box + new_box + plot_layout()</code></pre>
+<div class="figure"><span id="fig:patchowrk"></span>
+<img src="/post/blog2_files/figure-html/patchowrk-1.png" alt="Side-by-side plots with patchwork package" width="672" />
+<p class="caption">
+Figure 8: Side-by-side plots with patchwork package
+</p>
+</div>
