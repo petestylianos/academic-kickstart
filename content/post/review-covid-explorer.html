@@ -1,0 +1,125 @@
+---
+title: "Introducing Covid Analytics"
+subtitle: "A review of my first shiny app"
+author: "Panagiotis Stylianos"
+date: "2020-10-11"
+output:
+  bookdown::html_document2:
+    theme: journal
+    number_sections: false
+    
+abstract: "In this blog-post I will review as objectively as possible my first Shiny app named __Covid-Explorer__. The first section of the blog offers an introduction to how the app functions and and its potentia usage. In the _Self Review_ section of the blog I will endeavor to evaluate the result of my work, as well as, offer points of improvement that might take place in the short furure."
+bibliography: references.bib
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<style type="text/css">
+h1 {
+  color: navy
+}
+
+body{
+  background-color:#FCFBE9
+  
+}
+
+p{
+  color:#42647F
+}
+</style>
+<div id="introducing-covid-analytics" class="section level2">
+<h2>Introducing Covid Analytics</h2>
+<p>As the name suggests the purpose of <a href="https://petestylianos.shinyapps.io/covid-explorer/">Covid Analytics</a> is to offer a summary of key data related to <strong>COVID-19</strong>. As so, in the app the user cam find a broad spectrum of data and figures associated with the impact of COVID-19 in a plethora of countries. The app is structured based on a <em>navigation bar</em> at the top of the page, from which users can select to explore different <em>panels</em>.
+It is important to state that the main advantage of deploying a Shiny app is not only the option of providing the user with the ability to interactively explore the data, but also and most importantly that the data themselves are updated daily allowing for the user to constantly re-use the app to from new conclusions.<br>
+Briefly, the app consists of the following sections:</p>
+<p>A. <strong>Cases by Country</strong>: Includes a <em>Choropleth map</em> in which countries are shaded in proportion to the total cases of COVID-19 in that country. Also, the panel cosists of two Tables that provide statistics related to COVID-19 on both global and country level. The former table is interactive, allowing users to search for their country of choice. Finally, in the bottom of the panel you can find two interactive figures that visualize the growth in cases of COVID-19 and the death rate of the virus over time by country.</p>
+<p>B. <strong>Apple Analytics</strong>: Select a country from the select input option and explore data from <em><a href="https://covid19.apple.com/mobility">Apple Mobility Trend Reports</a></em> for various cities in the world to reveal interesting citizen movement patterns for driving, walking and transit.</p>
+<p>C. <strong>Google Analytics</strong>: Select a country from the select input option and explore data from <em><a href="https://www.google.com/covid19/mobility/">Google Mobility Trend Reports</a></em> for various countries to reveal changes in visits to places compared to a baseline period before the pandemic.</p>
+<p>D. <strong>Measures</strong>: Two interactive figures can be found in this tab. Both of them track measures taken by governments to prevent the spread of COVID-19. The first figure tracks the number of measures authorities have taken by country across five different categories over time. The second figure provides extensive details about the measures and their implementation. Note that in order to access the second figure you need to click on the legend of the first one in order to select the category of your interest.</p>
+<p>E. <strong>Tweets</strong>: This tab is a working project so it is not finalized yet. However, you can still select a hastag and search Twitter for the latest 100 tweets. Also, plots illustrating a sentiment analysis are included.</p>
+<p>F. <strong>About</strong>: Current tab, with instruction on how to run the app and details of the creator.</p>
+<p>G. <strong>Authenticate Twitter Account</strong>: Instructions about how to set up a <em>Twitter</em> account and get access to your personal and private key.</p>
+<p>After establishing the structure of the app and summarizing its contents, it’s essential to further expand on what the possible usage of its individual section might be. At this point it’s important to clarify that, when creating this app the <strong>targeted audience</strong> I had in mind was citizens that would like to get
+informed about the spread of the virus in their countries. However, as the development of the app progressed and I gained access to supplementary data, I decided to incorporate additional sections that offer valuable insight to both government and business executives.<br>
+Holding that thought I will clarify how audiences from both groups shall experiment with the app to reach informative conclusions. <br>
+<br>
+The <strong>Cases by Country</strong> and <strong>Measures</strong> tabs are primarily aimed to be used by the broad public. Hence, instead of bombarding the user with complex figures and tables, the initial visualization she laye eyes on when starting the app is a world map, with countries colored according to the number of COVID-19 cases. This, elementary figure can be easily interpreted and allows the user to rapidly understand which countries have been mostly impacted by the virus. The <strong>Worldwide Statistics</strong> table offers a summary of key variables to measure how severely the pandemic is progressing on a global scale. Finally, users have the option to search for theit country of interest. They can do so by either searching for their
+country at the <strong>Aggregated data per country</strong> table or by using the select input found at the bottom of the panel that produces a <strong>Daily Change in Cases by Category</strong> figure and the associated <strong>Death Rate</strong> figure of the selected country. <br>
+Now that the user, gained the necessary insight about the progress of cases in her country, she might be interested in gaining information about new measures being implemented in her countryo of interest. To resolve this I developed the <strong>Measures</strong> panel in which users can quickly get up to date with new measures being implemented. Based on the first figure the user can visually understand how many measures the country’s authorities have taken and also at which areas they are targeting their policies. This, knowledge can be essential to form an opinion regarding how effective the government of the country has been in contaminating the spread of the virus. Finally, when user clicks on one of the categories at the legend of the first graph a second figure named <strong>Occurence of Measures by Category</strong> pops-up providing additional information on the specific measures being implemented at the moment. Solely, by looking at the second graph the user gets all information, about what measures she is expected to follow in a matter of seconds, instead of having to browse various websites or watching the news. Moreover, for citizens of countires that are allowed to flight to other countries this figure provides all the necessary information for what documents they are expected to provide at the airport and at what measures they should adhere to. <br>
+<br>
+The following panels, although they may be appealing to the broad public, the targeted audience is government and business executives.<br>
+The <strong>Apple Analytics</strong> and <strong>Google Analytics</strong> figures can offer valuable insight when being looked at either from a business or governmental perspective. By identifying, citizen movement patterns for driving, walking and transit and tracking changes in visits to common places, such as grocery stores, workplaces, parks and transit stations compared to a baseline period before the pandemic, governmental authorities can evaluate the effectiveness of their taken measures and either continue their implementation or sufficiently adjust them to ensure the safety of the citizens.
+It’s important to mention that <strong>all data are anonymous</strong>, so none of the governments has access to personal information, but at the same time, they can gain an insight about the general population in different geographic segments of their countries.
+Furthermore, this trends in the behavior of the population can signify key drivers of change in several business industries. Corporations, can model and predict, not only how their targeted consumers are expected to behave, but also, based on the indications provided in the graphs, identify what their consumers would need to adjust to this new reality.<br>
+<br>
+For the same reasons mentioned above I developed the <strong>Twitter sentiment analysis</strong>. to model how populations react to new measures and how resilient or intolerant are towards them. However, since this panel is still under construction and at this point the tweets being scraped are only the latest 100, I won’t further elaborate on the potential usage of this panel. Nevertheless, in the next section of this blod, I will comment on what the upcoming improvements would be.</p>
+<blockquote>
+<p>Finally, please bare in mind that the app was created as part of an assignment for unit ETC5523: Communicating with Data; a core unit in the master of <strong><a href="https://www.monash.edu/business/master-of-business-analytics">Business Analytics at Monash University</a></strong>. The purpose of the assignment was to develop a Shiny app, as so all data and conclusions found in the app should be treated with cautious.
+The packages used in this app come from the following packages: <span class="citation">(Krispin and Byrnes 2020a)</span>, <span class="citation">(Krispin and Byrnes 2020b)</span>, <span class="citation">(Guidotti and Ardia 2020)</span></p>
+</blockquote>
+</div>
+<div id="self-review" class="section level2">
+<h2>Self Review</h2>
+<p>In this section of the blog I will try to review as fairly as possible my work.<br></p>
+<div id="what-went-well" class="section level3">
+<h3>What went well</h3>
+<p><img src="https://media1.tenor.com/images/5a5b26e19c0df8b4d602103c454dba80/tenor.gif?itemid=5177277" /></p>
+<ul>
+<li><p>When I consider my app I think that I am mostly proud for the <strong>Measures</strong> panel. The reason is that I find it extremely useful, as I found myself referring to it to get up to date with new measures being implemented. During the mid-semester break I went to the Netherlands and when I was about to return to Greece, where I am currently studying my master’s online, I wasn’y quite sure which documents I was required to provide at the boarder. Luckily, a quick look at the <strong>Occurence of Measures by Category</strong> figure provided all that information for me.</p></li>
+<li><p>From a “coding” perspective, I have to say that the process of developing the app helped me a lot in acquiring new knowledge. Firstly, I drastically improved my knowledge on how <strong>reactive programming</strong> works and how to use it.</p></li>
+<li><p>Another valuable skill I acquired was to consider how easily a user could understand the structure and the functionality of the app. To do this, I iterated between different layouts and after taking into consideration some feedback I decided to proceed with a very simple layout, mainly using a <strong>side-bar</strong> and a <strong>main-panel</strong> as I found that users found that layout more convenient.</p></li>
+<li><p>Moreover, since the app was completely my own idea and work it was the first time that I made a more serious effort to include <strong>CSS</strong> to further stylish it. I experimented with gradient background-coloring, creating tags for my tables and headers to have their own styling, changing the appearance of the navigation bar and of the slider inputs.</p></li>
+<li><p>Finally, I enjoyed that the final result was a fucntioning app that I proudly uploaded to the shiny server.</p></li>
+</ul>
+<p>To summarise, the process of developing a <strong>Shiny app</strong> helped me with understanding how to create interactive visualizations to answer world-related problems, to take into consideration the targeted audience in the development stages of the app, how to take advantage of reactive programming to update your code and I can finally say that I am now confident in using <strong>CSS</strong> in my projects.</p>
+</div>
+<div id="points-i-can-improve" class="section level3">
+<h3>Points I can improve</h3>
+<p>Moving on to what I could have done better or to what I can improve. The list can end up being quite extensive, but I will try to point out the most important aspects. Not, because I don’t want to criticize my work, but because my tutors are currently in the process of marking it and for sure I don’t want to make their task easier in identifying my mistakes. <strong>Jokes aside</strong>, I consider the following the areas that require imporvement or adjustments.</p>
+<ul>
+<li><p><strong>Turn code into functions</strong>, while I was writing the code for the server of the app, I realized that the code used to produce the outputs was very similar. For example, in the majority of the figures the user inputs a country of chose, as so the first part of the code in the server would be to filter based on that country. Although I did that, I ended up repeating myself, and constantly filtering my dataset in all parts of the code. To avoid that I could have included a reactive function inside the server to update the dataset based on the user input and then pass the updated dataset into the server outputs to produce the figures. The reason I didn’t do that was because while I creating the up I made the decision to produce the outputs even with <em>“ugly”</em> code in order to focus my energy on brainstorming ideas and in the back of head I had the impression that after the app is finished I would <em>“beautify”</em> my code to be faster, more efficient and to avoid duplication. In case you ask <strong>Why I didn’t do that</strong> I would argue that the deadline was approaching fast, but the main reason was that <strong>I couldn’t understand myself</strong>. ALthough, it might sound harsh for an app that’s working fine, but I have to be honest that while I was writing the code I was so excited with the production aspect, that I didn’t used any comments to write down what I am doing in the particular parts of both the cleaning script and the server. The result, was a script that was using the same datasets but with different names that took me a long time to debug and try to understand which parts I should drop or keep. Without a doubt my <strong>workflow</strong> won’t be the same after this assignment.</p></li>
+<li><p>Moreover, regarding the type of output I could improve, the <strong>Twitter</strong> panel requires the most work. Fist of all, I have to figure out why the particualr panel, although, fully functions at my local device, it’s not working accurately on the Shiny server.
+I thought, that the problem was regarding the consumer and private keys obtained from <strong>Twitter</strong>, but the databele with the most recent tweets gets displayed on the app, but the same doesn’t hold for the remaining figures.</p></li>
+<li><p>Another area of improvement is how aestheticaly pleasing is the final result.
+I would like to apply a different</p></li>
+<li><p>Finally, the thing that annoys me mostly is that ever since I uploaded the app to the shiny server it hurts to see spelling mistakes.</p></li>
+</ul>
+</div>
+<div id="new-additions" class="section level3">
+<h3>New additions</h3>
+<ul>
+<li><p>A datatable than can be filtered according to Date and Country and showcase the daily cases.</p></li>
+<li><p>A map that can be filtered by country and show where citizens from that country can fly to.</p></li>
+<li><p>A sentiment analysis of Twitter data, using timestamps. The idea is to create an index of tolerance to new measures to indicate which countries have been fatigued the most by the actions of their governments. The idea was/is to web scrape tweets on dates that new measures were announced for a country from the beginning of the pandemic until now. Then, doing a sentiment analysis of that data to realize whats the public opinion towards the new measures and if that opinion is in parallel with the progress of cases in that country.</p></li>
+</ul>
+</div>
+<div id="ideas-not-yet-capable-of-executing" class="section level3">
+<h3>Ideas not yet capable of executing</h3>
+<ul>
+<li><strong>Geocode twitter data</strong>. Unfortunately, less than 1% of the tweets had a location associated with them. I am assuming that users have probably turned of their location for privacy issues, but in that case the above analysis that I had in mind, becomes impossible to execute.</li>
+</ul>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>Overall, I found the experience of developing an app quite fan and rewarding, although sometimes frustrating. I would like to also get back some feedback from anyone who happens to read this blogpsot. Try out my app <a href="https://petestylianos.shinyapps.io/covid-explorer/">here</a> and please feel free to share any thoughts. Moreover, if you find the app interesting enough or you would like to work together on a project don’t hesitate to contact me. <br>
+Or as, <strong>Glootie</strong> from the popular show <strong>Rick and Morty</strong> would say:</p>
+<p><img src="https://media1.tenor.com/images/f178e008edb171dcece39c00ae0dd1a4/tenor.gif?itemid=17182284" /></p>
+</div>
+<div id="acknowledgements" class="section level2">
+<h2>Acknowledgements</h2>
+<p>The following packages contain all data used in the app.</p>
+<div id="refs" class="references hanging-indent">
+<div id="ref-COVID19">
+<p>Guidotti, Emanuele, and David Ardia. 2020. “COVID-19 Data Hub.” <em>Journal of Open Source Software</em> 5 (51): 2376. <a href="https://doi.org/10.21105/joss.02376">https://doi.org/10.21105/joss.02376</a>.</p>
+</div>
+<div id="ref-coronavirus">
+<p>Krispin, Rami, and Jarrett Byrnes. 2020a. <em>Coronavirus: The 2019 Novel Coronavirus Covid-19 (2019-nCoV) Dataset</em>. <a href="https://github.com/RamiKrispin/coronavirus">https://github.com/RamiKrispin/coronavirus</a>.</p>
+</div>
+<div id="ref-tidycovid19">
+<p>———. 2020b. <em>Coronavirus: The 2019 Novel Coronavirus Covid-19 (2019-nCoV) Dataset</em>. <a href="https://github.com/RamiKrispin/coronavirus">https://github.com/RamiKrispin/coronavirus</a>.</p>
+</div>
+</div>
+</div>
