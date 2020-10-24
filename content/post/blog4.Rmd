@@ -1,0 +1,127 @@
+---
+title: "Reviewing covidexplorer"
+author: "Panagiotis Stylianos"
+date: "`r format(Sys.Date(), '%Y-%m-%d')`"
+output:
+  bookdown::html_document2:
+    theme: journal
+    number_sections: false
+    
+abstract: "In this blog-post I will review as objectively as possible the R package of my colleague; Jimmy Effendy; named __covidexplorer__." 
+---
+
+
+
+```{css, echo=FALSE}
+h2 {
+  color: navy
+}
+
+h3 {
+  color:red
+}
+
+body{
+  background-color:#FCFBE9
+  
+}
+
+p{
+  color:#42647F
+}
+```
+
+
+## Overview
+
+In this blog-post I will review a new R package named __[covidexplorer](https://github.com/etc5523-2020/r-package-assessment-j-effendy)__ authored by my colleague Jimmy Effendy. This package was developed as part of an assignment for unit ETC5523: Communicating with Data; a core unit in the master of __[Business Analytics at Monash University](https://www.monash.edu/business/master-of-business-analytics)__. The main purpose of the package is to launch a Shiny app that allows the user to explore data relating to COVID-19. More specifically, the Shiny app a provides users with insights of the spread of COVID-19 in the US through interactive plots and tables.
+
+For more inforamtion you can refer to this [link](https://github.com/etc5523-2020/r-package-assessment-j-effendy), or use the below browser.
+
+```{r, echo=FALSE, out.width="900px"}
+library("webshot")
+knitr::include_url("https://etc5523-2020.github.io/r-package-assessment-j-effendy/articles/covidexplorer.html", height = "500px")
+```
+
+
+
+
+
+## Expectations vs. Reality {.tabset .tabset-pills}
+
+
+### Expected
+
+$\checkmark$  __Installation__  
+```{r, eval=FALSE}
+devtools::install_github("etc5523-2020/r-package-assessment-j-effendy")
+```
+
+Of to a good start. The package was installed quickly and without any errors or warnings.  
+Now let's look at the exported datasets and functions.
+
+$\checkmark$ __Datasets__
+
+ALl datasets can be accessed and their relevant documentation offers explanations about their variables and it is very thorough and accurate. 
+
+For reference the package exports three datasets named:
+
+* covid: USA COVID-19 Data
+* state_list: USA State List.
+* usa_map: USA Map Data.
+
+More info on how to use them can be found [here](https://etc5523-2020.github.io/r-package-assessment-j-effendy/index.html)
+
+The final step is to check the exported functions,
+
+
+$\color{red}\bigotimes$ __launch_app()__
+
+Unfortunately, I couldn't get the app to launch as I was getting an error.
+
+### Reality
+
+__Error Produced when using covidexplorer::launch_app()__
+
+`here() starts at /Library/Frameworks/R.framework/Versions/4.0/Resources/library/covidexplorer`
+`Warning in readChar(con, 5L, useBytes = TRUE) : cannot open compressed file` `/Library/Frameworks/R.framework/Versions/4.0/Resources/library/covidexplorer/data/covid.rda',`
+`probable reason 'No such file or directory'`
+`Error in readChar(con, 5L, useBytes = TRUE) : cannot open the connection`
+
+So, unfortunately I am not able to review the app inside the package.
+
+However, I should mention that the __error__ is not probably significant and it is due to a missing __.rda__ object that I am sure will be fixed in a future update.
+
+## Suggestions 
+
+
+## What I learned
+
+In conclusion, it is evident that Jimmy put a lot of effort in developing this package and thoroughly documenting everything. Based on, what I see in the README the shiny app also provides many insights on the state of coronavirus in USA. What I learned is how prone R packages are to errors and how hard might be to debug them. I am guessing that the package worked perfectly for Jimmy at his local system, but a problem arises when somebody else downloads it from _GitHub_. The fact that I encouraged similar problems when I developed mine(without knowing if they are fixed at the moment) __highlights__ the importance of developing packages in __collaboration__ with others cause the burden of doing all the work at your own might be overwelheming, especially in the first stages of your developement carrer.
+
+Kudos to Jimmy Effendy for his hard work!! Can't wait to see more of his next work.
+
+```{r, echo=FALSE, fig.align="center"}
+knitr::include_graphics("https://media0.giphy.com/media/ytTYwIlbD1FBu/giphy.gif?cid=ecf05e473hjx6awta167hth4iudvd7yn18gptgkeuies2iwp&rid=giphy.gif")
+```
+
+
+## Review Checklist
+
+
+#### Documentation
+
+The package includes all the following forms of documentation:
+
+- $\color{green}\checkmark$ **Installation instructions:** for the package is found in README  
+- $\color{green}\checkmark$ **Vignette(s)** demonstrating major functionality that runs successfully locally  
+- $\color{green}\checkmark$ **Function Documentation:** for all exported functions in R help  
+- [ ] **Examples** for all exported functions in R Help that run successfully locally  
+
+#### Functionality
+
+- $\color{green}\checkmark$ **Installation:** Installation succeeds as documented.  
+- $\color{red}\bigotimes$ **Functionality:** Any functional claims of the software been confirmed.  
+- [ ] **Automated tests:** Unit tests cover essential functions of the package  
+and a reasonable range of inputs and conditions. All tests pass on the local machine.  
+
