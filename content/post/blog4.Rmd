@@ -3,11 +3,10 @@ title: "Reviewing covidexplorer"
 author: "Panagiotis Stylianos"
 date: "`r format(Sys.Date(), '%Y-%m-%d')`"
 output:
-  bookdown::html_document2:
-    theme: journal
-    number_sections: false
-    
-abstract: "In this blog-post I will review as objectively as possible the R package of my colleague; Jimmy Effendy; named __covidexplorer__." 
+    bookdown::html_document2:
+      theme: journal
+      number_sections: false
+abstract: "In this blog-post I will review as objectively as possible the R package of my colleague; Jimmy Effendy; named __covidexplorer__."
 ---
 
 
@@ -119,12 +118,15 @@ The package includes all the following forms of documentation:
 - $\color{green}\checkmark$ **Installation instructions:** for the package is found in README  
 - $\color{green}\checkmark$ **Vignette(s)** demonstrating major functionality that runs successfully locally  
 - $\color{green}\checkmark$ **Function Documentation:** for all exported functions in R help  
-- [ ] **Examples** for all exported functions in R Help that run successfully locally  
+- $\color{green}\checkmark$ **Examples** for all exported functions in R Help that run successfully locally  
 
 #### Functionality
 
 - $\color{green}\checkmark$ **Installation:** Installation succeeds as documented.  
 - $\color{red}\bigotimes$ **Functionality:** Any functional claims of the software been confirmed.  
-- [$\color{green}\checkmark$] **Automated tests:** Unit tests cover essential functions of the package  
+- $\color{green}\checkmark$ **Automated tests:** Unit tests cover essential functions of the package  
 and a reasonable range of inputs and conditions. All tests pass on the local machine.  
+
+
+
 
