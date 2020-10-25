@@ -45,14 +45,12 @@ knitr::include_url("https://etc5523-2020.github.io/r-package-assessment-j-effend
 
 
 
-
-
 ## Expectations vs. Reality {.tabset .tabset-pills}
 
 
 ### Expected
 
-$\checkmark$  __Installation__  
+$\color{green}\checkmark$  __Installation__  
 ```{r, eval=FALSE}
 devtools::install_github("etc5523-2020/r-package-assessment-j-effendy")
 ```
@@ -60,7 +58,7 @@ devtools::install_github("etc5523-2020/r-package-assessment-j-effendy")
 Of to a good start. The package was installed quickly and without any errors or warnings.  
 Now let's look at the exported datasets and functions.
 
-$\checkmark$ __Datasets__
+$\color{green}\checkmark$ __Datasets__
 
 ALl datasets can be accessed and their relevant documentation offers explanations about their variables and it is very thorough and accurate. 
 
@@ -90,14 +88,19 @@ __Error Produced when using covidexplorer::launch_app()__
 
 So, unfortunately I am not able to review the app inside the package.
 
-However, I should mention that the __error__ is not probably significant and it is due to a missing __.rda__ object that I am sure will be fixed in a future update.
+However, I should mention that the __error__ is not probably significant and it is due to a missing __.rda__ object that I am sure will be fixed in a future update. Perhps the script that produces the shiny app needs to source this dataset at the beginning.
+
 
 ## Suggestions 
+
+Other than resolving the issue with the launch_app() function, let's see on what else can be further improved. The documentation of the package is excellent and details are provided for every function.
+I would suggest adding the link to the vignettes site next to the repository on GitHub in the _About_ section.
+Unfortunately, I can't provide any constructive feedback for the shiny app since I can't launch it.
 
 
 ## What I learned
 
-In conclusion, it is evident that Jimmy put a lot of effort in developing this package and thoroughly documenting everything. Based on, what I see in the README the shiny app also provides many insights on the state of coronavirus in USA. What I learned is how prone R packages are to errors and how hard might be to debug them. I am guessing that the package worked perfectly for Jimmy at his local system, but a problem arises when somebody else downloads it from _GitHub_. The fact that I encouraged similar problems when I developed mine(without knowing if they are fixed at the moment) __highlights__ the importance of developing packages in __collaboration__ with others cause the burden of doing all the work at your own might be overwelheming, especially in the first stages of your developement carrer.
+In conclusion, it is evident that Jimmy put a lot of effort in developing this package and thoroughly documenting everything. Based on, what I see in the README the shiny app also provides many insights on the state of coronavirus in USA. What I learned is how prone R packages are to errors and how hard might be to debug them. I am guessing that the package worked perfectly for Jimmy at his local system, but a problem arises when somebody else downloads it from _GitHub_. The fact that I encouraged similar problems when I developed mine(without knowing if they are fixed at the moment) __highlights__ the importance of developing packages in __collaboration__ with others cause the burden of doing all the work at your own might be overwhelming, especially in the first stages of your development career.
 
 Kudos to Jimmy Effendy for his hard work!! Can't wait to see more of his next work.
 
@@ -122,6 +125,6 @@ The package includes all the following forms of documentation:
 
 - $\color{green}\checkmark$ **Installation:** Installation succeeds as documented.  
 - $\color{red}\bigotimes$ **Functionality:** Any functional claims of the software been confirmed.  
-- [ ] **Automated tests:** Unit tests cover essential functions of the package  
+- [$\color{green}\checkmark$] **Automated tests:** Unit tests cover essential functions of the package  
 and a reasonable range of inputs and conditions. All tests pass on the local machine.  
 
